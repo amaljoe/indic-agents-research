@@ -30,7 +30,7 @@ Use WebFetch or WebSearch to retrieve:
 
 ### Step 2 — Classify into a theme folder
 
-Map the paper to one of these six theme folders under `docs/literature_review/`:
+Map the paper to one of these seven theme folders under `docs/literature_review/`:
 
 | Folder | Theme | Keywords |
 |--------|-------|----------|
@@ -40,6 +40,7 @@ Map the paper to one of these six theme folders under `docs/literature_review/`:
 | `04_cross_lingual_alignment/` | Cross-Lingual Alignment | alignment, embedding space, instruction tuning, transfer, cross-lingual |
 | `05_cultural_bias/` | Cultural Bias in LLMs | culture, bias, cultural awareness, values, persona, geopolitical |
 | `06_morphological_tokenization/` | Morphological Tokenization | tokenization, morphology, BPE, fertility, subword, script |
+| `07_rlvr/` | Reinforcement Learning with Verifiable Rewards | RLVR, GRPO, PPO, process reward, verifiable reward, reinforcement learning, reasoning, outcome reward |
 
 If a paper spans multiple themes, pick the **primary** theme.
 
@@ -141,3 +142,4 @@ R-directions: <R1/R2/R3 as applicable>
 - 04_cross_lingual_alignment: Alignment Survey (ACL 2024), Steering Embedding Spaces (ACL 2025), Multilingual Instruction Tuning (ACL 2024)
 - 05_cultural_bias: CultureLLM (NeurIPS 2024), Multi-Agent Cultural Debate (arXiv 2026), CASA (NAACL 2025)
 - 06_morphological_tokenization: MorphTok (arXiv 2025), Multilingual Tokenization Indic (arXiv 2025)
+- 07_rlvr: DeepSeek-R1 (arXiv 2025), Memory-R1 (arXiv 2025), Process Reward Models That Think (ICLR 2025), K2V (ICLR 2026)

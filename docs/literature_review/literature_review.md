@@ -2,7 +2,7 @@
 
 **Project:** indic-agents — IIT Bombay
 **Review Date:** March 2026
-**Scope:** 18 papers from top-tier venues (ACL, EMNLP, NeurIPS, NAACL, AAAI, IJCNLP) across 6 thematic areas
+**Scope:** 22 papers from top-tier venues (ACL, EMNLP, NeurIPS, NAACL, ICLR, IJCNLP) across 7 thematic areas
 **BibTeX:** [references.bib](references.bib)
 
 ---
@@ -159,7 +159,31 @@ Tokenization is the most foundational yet most underappreciated challenge in Ind
 
 ---
 
-## 8. Research Gaps and Open Problems
+## 8. Reinforcement Learning with Verifiable Rewards (RLVR)
+
+### Papers Reviewed
+| Paper | Venue | Key Contribution |
+|-------|-------|-----------------|
+| [DeepSeek-R1](07_rlvr/deepseek_r1_2025.md) | arXiv / Nature 2025 | GRPO training; emergent CoT reasoning from outcome rewards alone |
+| [Memory-R1](07_rlvr/memory_r1_2025.md) | arXiv 2025 | GRPO for agent memory ops (ADD/UPDATE/DELETE); 152-example sample efficiency |
+| [Process Reward Models That Think](07_rlvr/prm_think_iclr2025.md) | ICLR 2025 | CoT-enhanced PRM for step-level verification; PRM quality limits RLVR ceiling |
+| [Knowledge-to-Verification (K2V)](07_rlvr/k2v_iclr2026.md) | ICLR 2026 | Knowledge graph as verifiable reward scaffold for knowledge-intensive domains |
+
+### Synthesis
+
+RLVR has emerged as the most significant training paradigm shift in LLM research since instruction tuning. The core insight — crystallized in DeepSeek-R1 (arXiv:2501.12948) — is that sophisticated reasoning behaviors emerge spontaneously when models are trained with outcome-based rewards on verifiable tasks, without any supervision of intermediate reasoning steps. Group Relative Policy Optimization (GRPO) makes this tractable at scale by eliminating the learned critic model, instead computing advantages relative to a group of sampled rollouts.
+
+**Memory-R1** (Yan et al., 2025) demonstrates that the same GRPO paradigm transfers directly to agent memory management: structured ADD/UPDATE/DELETE operations emerge from retrieval accuracy rewards with only 152 training examples. This is the closest existing work to the cross-lingual memory management problem in indic-agents — the key extension is adding a cross-lingual LINK operation with retrieval correctness across language boundaries as the verifiable reward.
+
+**Process Reward Models That Think** (Khalifa et al., ICLR 2025) identifies a critical bottleneck: PRM quality limits the ceiling of RLVR training. For the cultural compliance RLVR sub-direction in this project, a thinking PRM that evaluates Indic cultural norm adherence at each response turn — rather than only at the terminal output — would provide substantially denser training signal than a final-output rule checker.
+
+**K2V** (Yuan et al., ICLR 2026) extends RLVR to knowledge-intensive domains by using knowledge graph completion as the verifiable reward scaffold. This is directly applicable to Indic-language knowledge-intensive QA (MILU, IndicGenBench): a KG built from SCERT textbooks or Kerala government scheme documents provides dense intermediate rewards for multi-hop reasoning chains that cannot be verified by a single answer extraction alone.
+
+**Convergent finding:** The four research gaps identified in this review (multilingual memory evaluation, Indian cultural alignment data, cross-lingual CoT, cross-lingual memory linking) share a common root — the absence of verifiable, language-agnostic training signals. RLVR resolves this: retrieval correctness (verified via Samanantar parallel pairs), answer correctness (verified via MILU/IndicGenBench), and cultural compliance (verified via India-CASA rule checker) are all constructible as verifiable rewards without human annotation of reasoning chains. This positions RLVR as the unifying training mechanism for the indic-agents v1.0 objective.
+
+---
+
+## 9. Research Gaps and Open Problems
 
 Based on the reviewed literature, the following gaps are most relevant to the indic-agents project:
 
@@ -177,15 +201,15 @@ A-MEM's dynamic linking addresses memory organization in monolingual settings. F
 
 ---
 
-## 9. Conclusion: Mapping to Project Research Directions
+## 10. Conclusion: Mapping to Project Research Directions
 
 | Research Direction | Most Relevant Papers | Key Insight |
 |--------------------|---------------------|-------------|
 | **R1: Knowledge assimilation** | Wang et al. 2025, Nguyen et al. 2024, Shaham et al. 2024 | English-inclusive CPT for fine-tuning; 40-example multilingual instruction pinch; English-pivot prompting for zero-shot |
-| **R2: Synthetic reasoning augmentation** | Nguyen et al. 2024, Liu et al. 2025 (XRAG), Chirkova et al. 2024 | English-pivot CoT; cross-lingual RAG failure modes as test cases; language-explicit prompting as baseline |
-| **R3: Dynamic memory management** | Xu et al. 2025 (A-MEM), Wang et al. 2024 (WISE), Sundar et al. 2025, Liu et al. 2024 (Alignment Survey) | Zettelkasten linking for cross-lingual memories; WISE sharding for multilingual edits; steering vectors to control alignment without generation degradation |
+| **R2: Synthetic reasoning augmentation** | DeepSeek-R1 2025, K2V (ICLR 2026), Nguyen et al. 2024, Liu et al. 2025 (XRAG) | Emergent Indic CoT via RLVR (no CoT annotation); K2V dense rewards for knowledge-intensive Indic QA; English-pivot baseline |
+| **R3: Dynamic memory management** | Memory-R1 2025, Xu et al. 2025 (A-MEM), Wang et al. 2024 (WISE), Khalifa et al. (PRM-Think) | GRPO for cross-lingual memory ops; Zettelkasten linking for cross-lingual memories; WISE sharding for multilingual edits; thinking PRM for cultural compliance verification |
 
-The indic-agents project is positioned at the intersection of all six literature streams reviewed here. No single existing paper addresses the full scope of the project; the novelty lies precisely in the integration: a memory system that is simultaneously agentic (A-MEM-style), multilingual (steering-vector-aligned), culturally-safe (SCGRD-debate-protected), and Indic-tokenization-aware.
+The indic-agents project is positioned at the intersection of all seven literature streams reviewed here. No single existing paper addresses the full scope of the project; the novelty lies precisely in the integration: a memory system that is simultaneously agentic (A-MEM-style), multilingual (steering-vector-aligned), culturally-safe (SCGRD-debate-protected), Indic-tokenization-aware, and RLVR-trained with verifiable cross-lingual and cultural rewards. RLVR is the missing piece that makes annotation-free training possible across all four identified research gaps.
 
 ---
 
@@ -223,3 +247,9 @@ Full BibTeX entries for all papers: [references.bib](references.bib)
 ### Theme 6: Morphological Tokenization
 - Mahurkar & Joshi (2025) — MorphTok: Morphologically Grounded Tokenization for Indian Languages. arXiv:2504.10335
 - Karthika et al. (2025) — Multilingual Tokenization through the Lens of Indian Languages. arXiv:2506.17789
+
+### Theme 7: Reinforcement Learning with Verifiable Rewards (RLVR)
+- DeepSeek-AI (2025) — DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning. arXiv:2501.12948
+- Yan et al. (2025) — Memory-R1: Enhancing LLM Agents to Manage and Utilize Memories via Reinforcement Learning. arXiv:2508.19828
+- Khalifa et al. (ICLR 2025) — Process Reward Models That Think. arXiv:2504.16828
+- Yuan et al. (ICLR 2026) — Knowledge-to-Verification: Unlocking RLVR for Knowledge-Intensive Domains. OpenReview:EVS7SeKBqI
