@@ -65,6 +65,44 @@ All paper summaries must map relevance to one or more of R1/R2/R3.
 
 ---
 
+## Autoresearch (indic_agent.py)
+
+Autoresearch-style experiment loop for MILU Malayalam evaluation.
+
+### Running
+
+```bash
+# 1. Start apptainer container (GPU access):
+app   # alias for: apptainer run --nv ~/images/cuda-custom-amal_latest.sif
+
+# 2. Activate vLLM environment inside container:
+export PATH=/dev/shm/vllm/bin:$PATH && export LD_LIBRARY_PATH=/dev/shm/vllm/lib:$LD_LIBRARY_PATH
+
+# 3. Run experiment loop:
+python indic_agent.py              # all 6 strategies, 5 min each
+python indic_agent.py --strategy N # re-run strategy N
+python indic_agent.py --minutes 1  # quick smoke test
+```
+
+### Key files
+
+- `indic_agent.py` — fixed: STRATEGIES dict + evaluation loop + git commit/revert
+- `agent.py` — editable: the strategy file (rewritten by the loop from STRATEGIES)
+- `program.md` — meta-agent instructions: show this to Claude Code between runs
+- `results.jsonl` — full experiment log (one JSON line per run)
+
+### Dataset
+
+MILU Malayalam: `ai4bharat/MILU`, config `"Malayalam"`, split `"test"` (4321 examples).
+Fields: `question`, `option1`–`option4`, `target` (`"option1"`–`"option4"` string).
+
+### Adding a new strategy
+
+Append a new entry to `STRATEGIES` dict in `indic_agent.py` with keys:
+`name`, `description`, `research` (R1/R2/R3), `code` (complete agent.py as a string with `{model}` placeholder).
+
+---
+
 ## Conventions
 
 - Paper summary files: lowercase, hyphenated, `<keyword>_<venue><year>.md`

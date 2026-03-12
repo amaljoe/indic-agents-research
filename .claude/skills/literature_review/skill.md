@@ -30,7 +30,18 @@ Use WebFetch or WebSearch to retrieve:
 
 ### Step 2 — Classify into a theme folder
 
-Map the paper to one of these seven theme folders under `docs/literature_review/`:
+**First, detect existing themes dynamically:**
+
+1. List all directories under `docs/literature_review/` that match the pattern `NN_<name>/` (use Glob or Bash `ls`). This gives you the current theme set.
+2. Read the theme names and use the existing keyword hints below as guidelines to check if the paper fits any current theme.
+3. **If the paper fits an existing theme**, use that folder. Done.
+4. **If the paper does NOT fit any existing theme**, infer a new theme:
+   - Choose a short, lowercase, underscore-separated theme name (e.g., `language_pivoting`)
+   - Assign the next sequential folder number (e.g., if highest existing is `07_rlvr/`, use `08_`)
+   - **Create the new directory**: `docs/literature_review/<NN>_<theme_name>/`
+   - Note that this paper is the **first in a new theme** — you will need to create a full new section in Step 5
+
+**Existing theme keyword hints (as of last update):**
 
 | Folder | Theme | Keywords |
 |--------|-------|----------|
@@ -41,6 +52,9 @@ Map the paper to one of these seven theme folders under `docs/literature_review/
 | `05_cultural_bias/` | Cultural Bias in LLMs | culture, bias, cultural awareness, values, persona, geopolitical |
 | `06_morphological_tokenization/` | Morphological Tokenization | tokenization, morphology, BPE, fertility, subword, script |
 | `07_rlvr/` | Reinforcement Learning with Verifiable Rewards | RLVR, GRPO, PPO, process reward, verifiable reward, reinforcement learning, reasoning, outcome reward |
+| `08_language_pivoting/` | Language Pivoting & Multilingual Reasoning | pivot language, language pivoting, think in English, CoT language choice, cross-lingual chain-of-thought, multilingual reasoning |
+
+> **Note:** If you detect new folders beyond `08_` in the filesystem, include them in your classification consideration. This list is updated as new themes are added.
 
 If a paper spans multiple themes, pick the **primary** theme.
 
@@ -95,22 +109,60 @@ Make **surgical edits only** — do not rewrite sections that don't need changes
 
 1. **Scope line** (line 5): Increment the paper count (e.g., "18 papers" → "19 papers") and add the venue if new.
 
-2. **Theme section table**: Find the `### Papers Reviewed` table for the matching theme and append a new row:
-   ```
-   | [<Short Title>](<theme_folder>/<filename>.md) | <Venue Year> | <One-line contribution> |
-   ```
+2. **Determine if this is an existing theme or a new theme:**
 
-3. **Theme synthesis paragraph**: Append 2–4 sentences to the existing synthesis summarising this paper's finding and how it connects to adjacent papers or the project's research directions. Place them after the last existing paragraph of that theme section, before the `---` separator.
+   **Case A — Existing theme:**
+   - Find the `### Papers Reviewed` table for the matching theme and append a new row:
+     ```
+     | [<Short Title>](<theme_folder>/<filename>.md) | <Venue Year> | <One-line contribution> |
+     ```
+   - Append 2–4 sentences to the existing synthesis paragraph for that theme, before the `---` separator.
 
-4. **Do NOT touch** other sections, the introduction, research gaps, conclusion table, or references list unless directly relevant.
+   **Case B — New theme (you created a new folder in Step 2):**
+   - Find the last `---` separator before the Research Gaps / Conclusion section.
+   - Insert a **complete new section block** immediately before that separator:
+     ```markdown
+     ## <N>. <Theme Title>
 
-### Step 6 — Confirm
+     ### Papers Reviewed
+
+     | Paper | Venue | Key Contribution |
+     |-------|-------|-----------------|
+     | [<Short Title>](<theme_folder>/<filename>.md) | <Venue Year> | <One-line contribution> |
+
+     <2–4 sentence synthesis paragraph introducing the theme and this paper's contribution.>
+
+     ---
+     ```
+   - Where `<N>` is the sequential section number (check existing section headings to determine it).
+
+3. **Do NOT touch** other sections, the introduction, research gaps, conclusion table, or references list unless directly relevant.
+
+### Step 6 — Update `docs/literature_review/references.bib`
+
+Append a BibTeX entry for the paper:
+- If this is the first paper in a new theme, add a theme comment header first:
+  ```bibtex
+  %% ============================================================
+  %% THEME <N>: <Theme Title>
+  %% ============================================================
+  ```
+- Then add the BibTeX entry using the standard format (key: `<firstauthor><year><keyword>`).
+
+### Step 7 — Self-update the skill's theme coverage list
+
+If you created a **new theme folder** in Step 2, update the **Existing theme coverage** section at the bottom of *this skill file* (`.claude/skills/literature_review/skill.md`):
+- The list already contains lines like `- 07_rlvr: DeepSeek-R1 ...`
+- Append a new line for the new theme
+- Also add the new theme row to the keyword hints table in Step 2 of this skill
+
+### Step 8 — Confirm
 
 After writing, output a brief confirmation:
 ```
 Added: docs/literature_review/<theme_folder>/<filename>.md
 Updated: docs/literature_review/literature_review.md (section: <theme name>)
-Theme: <theme name>
+Theme: <theme name> [NEW THEME / existing]
 Venue: <venue>
 R-directions: <R1/R2/R3 as applicable>
 ```
@@ -143,3 +195,4 @@ R-directions: <R1/R2/R3 as applicable>
 - 05_cultural_bias: CultureLLM (NeurIPS 2024), Multi-Agent Cultural Debate (arXiv 2026), CASA (NAACL 2025)
 - 06_morphological_tokenization: MorphTok (arXiv 2025), Multilingual Tokenization Indic (arXiv 2025)
 - 07_rlvr: DeepSeek-R1 (arXiv 2025), Memory-R1 (arXiv 2025), Process Reward Models That Think (ICLR 2025), K2V (ICLR 2026)
+- 08_language_pivoting: MGSM (EMNLP 2022), PLUG (ACL 2024), Do Multilingual LLMs Think In English? (arXiv 2025), Semantic Pivots (arXiv 2025), Think Natively (arXiv 2024), Could Thinking Multilingually... (arXiv 2025)

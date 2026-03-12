@@ -4,7 +4,7 @@
 
 Maximize accuracy on **MILU Malayalam** multiple-choice QA.
 - Dataset: `ai4bharat/MILU`, config `Malayalam`, split `test`
-- Model: `Qwen/Qwen3.5-2B` via vLLM on A100
+- Model: `Qwen/Qwen3-1.7B` via vLLM on A100
 - Each strategy runs for **5 minutes** wall-clock
 
 ---
@@ -64,8 +64,21 @@ When proposing a new `agent.py`:
 
 ---
 
+## Results So Far (live)
+
+| Strategy | Acc | n | Notes |
+|---|---|---|---|
+| few-shot-2 (R1) | **0.2580** | 4321 | Best — 2-shot examples |
+| baseline-direct-ml (R2) | 0.2571 | 4321 | Committed to git |
+| english-pivot-cot (R2) | 0.2483 | 290 | Worse than baseline — pivot hurts! |
+| native-malayalam-cot (R2) | 0.2346 | 243 | Worst — native CoT hurts too |
+| cultural-system-prompt (R1) | running... | — | On GPU 1 |
+| few-shot-english-cot-hybrid (R1+R2) | running... | — | On GPU 3 |
+
+**Key finding**: For Qwen3-1.7B, CoT reasoning (both English-pivot and native) HURTS accuracy vs direct prompting. Few-shot examples help marginally. This directly maps to R2 research question.
+
 ## Best Result So Far
 
-- Accuracy: **0.0000**
-- Last run: strategy=baseline-direct-ml acc=0.0000 on 14 examples (revert-failed)
-- Updated: 2026-03-12 00:54
+- Accuracy: **0.2578**
+- Last run: strategy=few-shot-english-cot-hybrid acc=0.0000 on 23 examples (reverted)
+- Updated: 2026-03-12 01:27

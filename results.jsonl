@@ -1,0 +1,8 @@
+{"timestamp": "2026-03-12T00:53:07.438980", "strategy_idx": 0, "strategy_name": "baseline-direct-ml", "strategy_research": "R2", "accuracy": 0.0, "n": 4321, "elapsed_s": 21, "action": "revert-failed"}
+{"timestamp": "2026-03-12T00:54:38.300671", "strategy_idx": 0, "strategy_name": "baseline-direct-ml", "strategy_research": "R2", "accuracy": 0.0, "n": 14, "elapsed_s": 41, "action": "revert-failed"}
+{"timestamp": "2026-03-12T01:04:10.248796", "strategy_idx": 0, "strategy_name": "baseline-direct-ml", "strategy_research": "R2", "accuracy": 0.2571164082388336, "n": 4321, "elapsed_s": 243, "action": "kept"}
+{"timestamp": "2026-03-12T01:09:13.156101", "strategy_idx": 1, "strategy_name": "english-pivot-cot", "strategy_research": "R2", "accuracy": 0.2482758620689655, "n": 290, "elapsed_s": 302, "action": "reverted"}
+{"timestamp": "2026-03-12T01:14:15.853778", "strategy_idx": 2, "strategy_name": "native-malayalam-cot", "strategy_research": "R2", "accuracy": 0.23577235772357724, "n": 246, "elapsed_s": 302, "action": "reverted"}
+{"timestamp": "2026-03-12T01:17:24.432690", "strategy_idx": 3, "strategy_name": "few-shot-2", "strategy_research": "R1", "accuracy": 0.2578106919694515, "n": 4321, "elapsed_s": 188, "action": "kept"}
+{"timestamp": "2026-03-12T01:22:30.352496", "strategy_idx": 4, "strategy_name": "cultural-system-prompt", "strategy_research": "R1", "accuracy": 0.0, "n": 23, "elapsed_s": 305, "action": "reverted"}
+{"timestamp": "2026-03-12T01:27:37.845743", "strategy_idx": 5, "strategy_name": "few-shot-english-cot-hybrid", "strategy_research": "R1+R2", "accuracy": 0.0, "n": 23, "elapsed_s": 307, "action": "reverted"}

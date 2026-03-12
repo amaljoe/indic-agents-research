@@ -2,7 +2,7 @@
 
 **Project:** indic-agents — IIT Bombay
 **Review Date:** March 2026
-**Scope:** 22 papers from top-tier venues (ACL, EMNLP, NeurIPS, NAACL, ICLR, IJCNLP) across 7 thematic areas
+**Scope:** 28 papers from top-tier venues (ACL, EMNLP, NeurIPS, NAACL, ICLR, IJCNLP) across 8 thematic areas
 **BibTeX:** [references.bib](references.bib)
 
 ---
@@ -183,7 +183,33 @@ RLVR has emerged as the most significant training paradigm shift in LLM research
 
 ---
 
-## 9. Research Gaps and Open Problems
+## 9. Language Pivoting and Multilingual Reasoning
+
+### Papers Reviewed
+| Paper | Venue | Key Contribution |
+|-------|-------|-----------------|
+| [Language Models are Multilingual CoT Reasoners (MGSM)](08_language_pivoting/mgsm_emnlp2022.md) | EMNLP 2022 | Foundational benchmark: CoT works in 10 languages including Bengali |
+| [PLUG: Pivot Language in Cross-Lingual Instruction Tuning](08_language_pivoting/plug_acl2024.md) | ACL 2024 | English-pivot instruction tuning yields ~29% gain for lower-resource languages |
+| [Semantic Pivots Enable Cross-Lingual Transfer](08_language_pivoting/semantic-pivots_2025.md) | arXiv 2025 | Identifies English as implicit semantic pivot in LLM internals; targeted pretraining improves it |
+| [Do Multilingual LLMs Think In English?](08_language_pivoting/do-multilingual-llms-think-in-english_2025.md) | arXiv 2025 | Logit lens shows implicit English-pivot even for non-English inputs; a transparency problem |
+| [Think Natively: Multilingual Reasoning via Consistency-Enhanced RL](08_language_pivoting/think-natively_2024.md) | arXiv 2025 | RL rewards for language consistency enforce native-language CoT; RLVR controls language behavior |
+| [Could Thinking Multilingually Empower LLM Reasoning?](08_language_pivoting/could-thinking-multilingually_2025.md) | arXiv 2025 | ~10 Acc@k headroom over English-only reasoning by allowing optimal language selection |
+
+### Synthesis
+
+**Language pivoting** refers to using a high-resource language — almost always English — as an intermediate reasoning step in multilingual LLMs. The debate on whether to pivot to English for reasoning is one of the most practically consequential open questions for the indic-agents project.
+
+**Arguments for pivoting** are empirically grounded in instruction quality. **PLUG** (Zhang et al., ACL 2024) demonstrates a ~29% improvement in cross-lingual instruction-following by routing interpretation through English, attributing the gain to the mismatch between English-dominant pretraining and lower-resource target languages. This is reinforced by **He et al.** (2025), who show that English *is* the semantic pivot structurally embedded in LLM internals — the model has learned to use English as the conceptual hub during pretraining, and this mechanism enables cross-lingual transfer.
+
+**Arguments against pivoting** are equally empirical but more recent. **Gao et al.** (2025) demonstrate ~10 Acc@k points of headroom above English-only reasoning when models are free to reason in their most capable language, revealing that forced English pivoting is leaving performance on the table. **Schut et al.** (2025) expose a transparency dimension: current LLMs already implicitly pivot through English without user awareness, introducing invisible semantic distortions for concepts that don't translate cleanly. **Zhang et al.** (2025) directly address this with M-Thinker: RL-trained language consistency rewards can suppress English drift and enforce native-language reasoning chains, with generalization to unseen languages — demonstrating that the English bias is a learned artifact correctable by RLVR.
+
+**The foundational question** — posed implicitly by **MGSM** (Shi et al., 2022) — is whether the CoT reasoning ability itself is language-agnostic, or whether English provides genuine cognitive advantage as a reasoning medium. Current evidence suggests the former: at sufficient model scale and with appropriate training signals, reasoning quality in non-English languages can match or exceed English. The performance gap is an artifact of data imbalance and training signal design, not an inherent property of language.
+
+**Implications for indic-agents:** The pivot debate maps directly onto **R2** (synthetic reasoning augmentation). For low-resource Indic languages with sparse pretraining data, a transitional English-pivot approach (PLUG-style) may be necessary in the short term. However, the long-term goal — and the RLVR research direction — is to train models with language consistency rewards (M-Thinker-style) that reason natively in Indic languages, eliminating the implicit English distortion that Schut et al. identify. The ~10-point multilingual reasoning headroom provides a quantifiable target for this research direction.
+
+---
+
+## 10. Research Gaps and Open Problems
 
 Based on the reviewed literature, the following gaps are most relevant to the indic-agents project:
 
@@ -201,7 +227,7 @@ A-MEM's dynamic linking addresses memory organization in monolingual settings. F
 
 ---
 
-## 10. Conclusion: Mapping to Project Research Directions
+## 11. Conclusion: Mapping to Project Research Directions
 
 | Research Direction | Most Relevant Papers | Key Insight |
 |--------------------|---------------------|-------------|
@@ -253,3 +279,11 @@ Full BibTeX entries for all papers: [references.bib](references.bib)
 - Yan et al. (2025) — Memory-R1: Enhancing LLM Agents to Manage and Utilize Memories via Reinforcement Learning. arXiv:2508.19828
 - Khalifa et al. (ICLR 2025) — Process Reward Models That Think. arXiv:2504.16828
 - Yuan et al. (ICLR 2026) — Knowledge-to-Verification: Unlocking RLVR for Knowledge-Intensive Domains. OpenReview:EVS7SeKBqI
+
+### Theme 8: Language Pivoting and Multilingual Reasoning
+- Shi et al. (EMNLP 2022) — Language Models are Multilingual Chain-of-Thought Reasoners. arXiv:2210.03057
+- Zhang et al. (ACL 2024) — PLUG: Leveraging Pivot Language in Cross-Lingual Instruction Tuning. arXiv:2311.08711
+- He et al. (2025) — Semantic Pivots Enable Cross-Lingual Transfer in Large Language Models. arXiv:2505.16385
+- Schut et al. (2025) — Do Multilingual LLMs Think In English? arXiv:2502.15603
+- Zhang et al. (2025) — Think Natively: Unlocking Multilingual Reasoning with Consistency-Enhanced RL. arXiv:2510.07300
+- Gao et al. (2025) — Could Thinking Multilingually Empower LLM Reasoning? arXiv:2504.11833

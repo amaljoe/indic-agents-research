@@ -1,0 +1,1 @@
+{"timestamp": "2026-03-12T01:15:51.044693", "strategy_idx": 5, "strategy_name": "few-shot-english-cot-hybrid", "strategy_research": "R1+R2", "accuracy": 0.2693409742120344, "n": 349, "elapsed_s": 311, "action": "evaluated"}
